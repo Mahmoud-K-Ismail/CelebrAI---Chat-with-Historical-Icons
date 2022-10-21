@@ -1,12 +1,12 @@
 The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
 
-(__TODO__: your project name_)
+(__TODO__: your project name)
 
 # Shoppy Shoperson 
 
 ## Overview
 
-(__TODO__: a brief one or two paragraph, high-level description of your project_)
+(__TODO__: a brief one or two paragraph, high-level description of your project)
 
 Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
 
@@ -15,14 +15,14 @@ Shoppy Shoperson is a web app that will allow users to keep track of multiple gr
 
 ## Data Model
 
-(__TODO__: a description of your application's data and their relationships to each other_) 
+(__TODO__: a description of your application's data and their relationships to each other) 
 
 The application will store Users, Lists and Items
 
 * users can have multiple lists (via references)
 * each list can have multiple items (by embedding)
 
-(__TODO__: sample documents_)
+(__TODO__: sample documents)
 
 An Example User:
 
@@ -51,11 +51,11 @@ An Example List with Embedded Items:
 
 ## [Link to Commented First Draft Schema](db.mjs) 
 
-(__TODO__: create a first draft of your Schemas in db.mjs and link to it_)
+(__TODO__: create a first draft of your Schemas in db.mjs and link to it)
 
 ## Wireframes
 
-(__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
+(__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
 
 /list/create - page for creating a new shopping list
 
@@ -71,7 +71,7 @@ An Example List with Embedded Items:
 
 ## Site map
 
-(__TODO__: draw out a site map that shows how pages are related to each other_)
+(__TODO__: draw out a site map that shows how pages are related to each other)
 
 Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
 
@@ -88,7 +88,7 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 
 ## Research Topics
 
-(__TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed_)
+(__TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed)
 
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
@@ -101,16 +101,16 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 * (5 points) vue.js
     * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
+10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit)
 
 
 ## [Link to Initial Main Project File](app.mjs) 
 
-(__TODO__: create a skeleton Express application with a package.json, app.mjs, views folder, etc. ... and link to your initial app.mjs_)
+(__TODO__: create a skeleton Express application with a package.json, app.mjs, views folder, etc. ... and link to your initial app.mjs)
 
 ## Annotations / References Used
 
-(__TODO__: list any tutorials/references/etc. that you've based your code off of_)
+(__TODO__: list any tutorials/references/etc. that you've based your code off of)
 
 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
 2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
