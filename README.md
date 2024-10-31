@@ -273,7 +273,7 @@ Site map
 - (5 points) Machine Learning Integration
   - Integrate a model that is devoloped using LSTM (Long-Short term Memory) deep learning method which is trained on Shakespear works. 
 
-**Total Points:** 17 out of 8 required points.
+**Total Points:** 17 out of 10 required points.
 
 ## [Link to Initial Main Project File](app.mjs)
 
