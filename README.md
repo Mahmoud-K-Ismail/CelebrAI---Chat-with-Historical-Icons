@@ -260,20 +260,43 @@ Site map
 
 ## Research Topics
 
-- (5 points) Integrate user authentication
-  - I'm going to be using Passport for user authentication.
-  - I will also implement OAuth 2.0 using Google Sign-In.
+### 1. User Authentication - 5 points
+- **What is it?** Authentication is the process of confirming the identity of a user who tries to access an application, typically by verifying credentials such as a username and password.
+- **Why use it?** Ensures that only authenticated users can access sensitive data, like conversation history, protecting user privacy and application security.
+- **Modules/Solutions:**
+  - Passport.js (offers modular, flexible authentication strategies for Node.js)
+  - JWT (stateless, token-based authentication)
+  - OAuth 2.0 (for integration with providers like Google)
+- **Points:** 5 points
 
-- (3 points) Use a CSS framework throughout your site with reasonable customization.
-  - I plan to use Tailwind CSS for styling the application.
+### 2. CSS Framework for Consistent Styling - 3 points
+- **What is it?** A CSS framework provides reusable, pre-defined styles and layout structures to create a visually cohesive, responsive UI.
+- **Why use it?** Streamlines the design process and enhances the user experience by creating a consistent, polished appearance across all pages.
+- **Modules/Solutions:**
+  - Tailwind CSS (utility-first, highly customizable)
+  - Bootstrap (widely used, feature-rich)
+  - Bulma (lightweight and flexible)
+- **Points:** 3 points
 
-- (4 points) Perform client-side form validation using custom JavaScript or a library.
-  - Implement form validation for user registration and message input.
+### 3. Client-Side Form Validation - 4 points
+- **What is it?** Form validation checks that input data conforms to expected formats before submission, such as required fields or valid email addresses.
+- **Why use it?** Improves user experience by providing immediate feedback, reducing server load by filtering invalid submissions at the client level.
+- **Modules/Solutions:**
+  - JavaScript (custom validation)
+  - Parsley.js (flexible form validation library)
+  - Validator.js (utility for common validation patterns)
+- **Points:** 4 points
 
-- (5 points) Machine Learning Integration
-  - Integrate a model that is devoloped using LSTM (Long-Short term Memory) deep learning method which is trained on Shakespear works. 
+### 4. Machine Learning Integration for Shakespearean Text Generation - 5 points
+- **What is it?** Integrates a pre-trained language model to generate responses in the Shakespearean style, adding authenticity and engagement to user conversations.
+- **Why use it?** Enhances the experience by creating high-quality, thematic responses that mimic Shakespeare's language, making the application unique.
+- **Modules/Solutions:**
+  - Hugging Face Transformers (extensive support for pre-trained NLP models)
+  - OpenAI GPT-2 (popular language model for fine-tuning)
+  - spaCy (for various NLP tasks and model deployment)
+- **Points:** 5 points
 
-**Total Points:** 17 out of 10 required points.
+**Total Points:** 17 out of 10 required points
 
 ## [Link to Initial Main Project File](app.mjs)
 
