@@ -271,7 +271,7 @@ Site map
   - Implement form validation for user registration and message input.
 
 - (5 points) Machine Learning Integration
-  - Integrate a pre-trained language model (e.g., GPT-2) fine-tuned on Shakespeare's works.
+  - Integrate a model that is devoloped using LSTM (Long-Short term Memory) deep learning method which is trained on Shakespear works. 
 
 **Total Points:** 17 out of 8 required points.
 
