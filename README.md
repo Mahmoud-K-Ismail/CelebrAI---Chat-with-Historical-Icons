@@ -246,7 +246,7 @@ The application will store Users, Conversations, and Messages:
   ![Wireframe for Change Username](change.png)
 
 ## Site Map
-
+![Site Map](map.png)
 Site map
 
 ## User Stories or Use Cases
@@ -275,7 +275,7 @@ Site map
 
 **Total Points:** 17 out of 8 required points.
 
-## [Link to Initial Main Project File](app.js)
+## [Link to Initial Main Project File](app.mjs)
 
 ## Annotations / References Used
 
