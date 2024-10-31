@@ -242,7 +242,7 @@ The application will store Users, Conversations, and Messages:
 - **/chat** - Main page for chatting with Shakespeare  
   ![Wireframe for Chat Page](chat.png)
 
-- **/history** - Page for viewing conversation history  
+- **/user info editing** - Page for editing user info
   ![Wireframe for Change Username](change.png)
 
 ## Site Map
