@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - ShakespeareGPT</title>
+</head>
+<body>
+<h1>Chat with Shakespeare</h1>
+<div id="chatBox"></div>
+<input type="text" id="messageInput" placeholder="Type your message...">
+<button onclick="sendMessage()">Send</button>
+
+<script>
+    let conversationId;
+
+    async function startConversation() {
+        const response = await fetch('/chat/start', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ character: 'Shakespeare' })
+        });
+        const data = await response.json();
+        conversationId = data.conversationId;
+    }
+
+    async function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const message = messageInput.value;
+        messageInput.value = '';
+
+        displayMessage(message, true);
+
+        const response = await fetch('/chat/message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ conversationId, message })
+        });
+        const data = await response.json();
+        displayMessage(data.aiResponse, false);
+    }
+
+    function displayMessage(message, isUser) {
+        const chatBox = document.getElementById('chatBox');
+        const messageElement = document.createElement('p');
+        messageElement.textContent = `${isUser ? 'You' : 'Shakespeare'}: ${message}`;
+        chatBox.appendChild(messageElement);
+    }
+
+    startConversation();
+</script>
+</body>
+</html>
