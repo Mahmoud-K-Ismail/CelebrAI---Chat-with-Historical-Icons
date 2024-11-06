@@ -6,9 +6,16 @@ import session from 'express-session';
 import passport from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import chatRoutes from './routes/chat.js';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import dotenv from 'dotenv';
+import cors from 'cors';
 
+
+// Load environment variables
+dotenv.config();
+
+// Connect to MongoDB
 connectDB();
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,22 +23,40 @@ const __dirname = dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Initialize Gemini AI
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'your_session_secret',
+    secret: process.env.SESSION_SECRET || 'your_session_secret',
     resave: false,
     saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/auth', authRoutes);
 app.use(express.static('public'));
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
+app.use(cors());
 
+// Root route
 app.get('/', (req, res) => {
     res.send('Welcome to ShakespeareGPT!');
+});
+
+// Gemini API chat route
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { message } = req.body;
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const result = await model.generateContent(message);
+        const response = await result.response;
+        const text = response.text();
+        res.json({ reply: text });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 app.listen(port, () => {
