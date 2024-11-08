@@ -147,6 +147,11 @@ app.use(express.static('dist'));
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
 
+// Handle frontend routes (all unmatched routes should be served by index.html)
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/dist/index.html');
+});
+
 // Root route
 app.get('/', (req, res) => {
     res.send('Welcome to ShakespeareGPT!');
