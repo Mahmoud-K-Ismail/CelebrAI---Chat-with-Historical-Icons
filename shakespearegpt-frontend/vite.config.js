@@ -5,8 +5,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:3000',
-      '/auth': 'http://localhost:3000'
+      '/api': 'http://linserv1.cims.nyu.edu:31940',
+      '/auth': 'http://linserv1.cims.nyu.edu:31940'
     }
   }
 });
