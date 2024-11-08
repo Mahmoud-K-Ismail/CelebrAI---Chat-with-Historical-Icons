@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Register from './Register';
 import Chat from './Chat';
 
@@ -10,14 +10,10 @@ const App = () => {
     return (
         <Router>
             <div className="App">
-                <Switch>
-                    <Route path="/register">
-                        <Register apiUrl={API} />
-                    </Route>
-                    <Route path="/chat">
-                        <Chat apiUrl={API} />
-                    </Route>
-                </Switch>
+                <Routes>
+                    <Route path="/register" element={<Register apiUrl={API} />} />
+                    <Route path="/chat" element={<Chat apiUrl={API} />} />
+                </Routes>
             </div>
         </Router>
     );
