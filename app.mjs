@@ -9,9 +9,9 @@ import chatRoutes from './routes/chat.js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
-
-// Load environment variables
+// Load environment variables from .env file
 dotenv.config();
 
 // Connect to MongoDB
