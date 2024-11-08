@@ -38,7 +38,7 @@ app.use(passport.session());
 app.use(express.static('public'));
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
-app.use(cors());
+app.use(cors({ origin: 'http://linserv1.cims.nyu.edu:12173' })); // remove the curly brackets if not working
 
 // Root route
 app.get('/', (req, res) => {
