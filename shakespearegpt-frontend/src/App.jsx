@@ -49,31 +49,62 @@
 // }
 //
 // export default App;
+//
+// import React from 'react';
+// import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+// import Chat from './Chat';
+// import Register from './Register';
+// import './App.css';
+//
+// function App() {
+//     return (
+//         <Router>
+//             <div className="App">
+//                 <nav>
+//                     <ul>
+//                         <li><Link to="/">Chat</Link></li>
+//                         <li><Link to="/register">Register</Link></li>
+//                     </ul>
+//                 </nav>
+//
+//                 <Routes>
+//                     <Route path="/" element={<Chat />} />
+//                     <Route path="/register" element={<Register />} />
+//                 </Routes>
+//             </div>
+//         </Router>
+//     );
+// }
+//
+// export default App;
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Chat from './Chat';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './Home';
 import Register from './Register';
-import './App.css';
+import Chat from './Chat';
 
-function App() {
+// Use the environment variable to define your backend URL
+const API = import.meta.env.VITE_BACKEND_URL;
+
+const App = () => {
     return (
         <Router>
             <div className="App">
-                <nav>
-                    <ul>
-                        <li><Link to="/">Chat</Link></li>
-                        <li><Link to="/register">Register</Link></li>
-                    </ul>
-                </nav>
-
-                <Routes>
-                    <Route path="/" element={<Chat />} />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
+                <Switch>
+                    <Route path="/" exact>
+                        <Home apiUrl={API} />
+                    </Route>
+                    <Route path="/register">
+                        <Register apiUrl={API} />
+                    </Route>
+                    <Route path="/chat">
+                        <Chat apiUrl={API} />
+                    </Route>
+                </Switch>
             </div>
         </Router>
     );
-}
+};
 
 export default App;
