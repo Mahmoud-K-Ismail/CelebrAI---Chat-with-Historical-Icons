@@ -1,0 +1,61 @@
+/* src/Chat.css */
+.chat-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    height: 400px;
+    overflow-y: auto;
+    background-color: #1c1c1e; /* Dark background for better contrast */
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 80%;
+    color: #ffffff; /* White text for visibility on dark backgrounds */
+}
+
+/* Updated message colors for better visibility with white text */
+.user {
+    background-color: #4a90e2; /* Dark blue background for user messages */
+    align-self: flex-end;
+    text-align: right;
+}
+
+.bot {
+    background-color: #6c757d; /* Dark gray background for bot messages */
+    align-self: flex-start;
+    text-align: left;
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    width: 70%;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

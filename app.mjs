@@ -9,7 +9,8 @@ import chatRoutes from './routes/chat.js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import axios from 'axios'; // Use axios for making requests to Gemini API
 
 // Load environment variables from .env file
 dotenv.config();
@@ -46,18 +47,57 @@ app.get('/', (req, res) => {
 });
 
 // Gemini API chat route
+// app.post('/api/chat', async (req, res) => {
+//     try {
+//         const { message } = req.body;
+//         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+//         const result = await model.generateContent(message);
+//         const response = await result.response;
+//         const text = response.text();
+//         res.json({ reply: text });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
+
+import redis from 'redis';
+const redisClient = redis.createClient();
+
 app.post('/api/chat', async (req, res) => {
     try {
         const { message } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const result = await model.generateContent(message);
-        const response = await result.response;
-        const text = response.text();
-        res.json({ reply: text });
+        const cacheKey = `shakespeare:${message}`;
+
+        // Check if response is cached
+        redisClient.get(cacheKey, async (err, cachedResponse) => {
+            if (err) throw err;
+
+            if (cachedResponse) {
+                // If cached, return the cached response
+                return res.json({ reply: cachedResponse });
+            } else {
+                // Create Shakespeare prompt
+                const shakespearePrompt = `Pretend you are William Shakespeare. Respond in his style. Here is the question: "${message}"`;
+
+                // Generate response using the Gemini model
+                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                const result = await model.generateContent(shakespearePrompt);
+                const response = await result.response;
+                const text = await response.text();
+
+                // Cache the response
+                redisClient.setex(cacheKey, 3600, text); // Cache for 1 hour
+
+                // Send the response back
+                res.json({ reply: text });
+            }
+        });
     } catch (error) {
+        console.error('Error:', error);
         res.status(500).json({ error: error.message });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
