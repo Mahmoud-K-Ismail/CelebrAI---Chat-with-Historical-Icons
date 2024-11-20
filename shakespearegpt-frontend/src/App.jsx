@@ -6,6 +6,7 @@ import Chat from './Chat';
 
 // Use the environment variable to define your backend URL
 const API = import.meta.env.VITE_BACKEND_URL;
+console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
 
 const App = () => {
     return (
