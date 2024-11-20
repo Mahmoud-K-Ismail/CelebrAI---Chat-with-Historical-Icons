@@ -115,8 +115,8 @@ import authRoutes from './routes/auth.js';
 import chatRoutes from './routes/chat.js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
-import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -133,23 +133,37 @@ const port = process.env.PORT || 3000;
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-app.use(cors());
+// Request logging middleware
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
+// JSON and URL-encoded parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session middleware
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your_session_secret',
     resave: false,
     saveUninitialized: false
 }));
+
+// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('dist'));
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, 'shakespearegpt-frontend/dist')));
+
+// API Routes
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
 
-// Handle frontend routes (all unmatched routes should be served by index.html)
+// Handle frontend routes (React fallback for SPA)
 app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/dist/index.html');
+    res.sendFile(path.join(__dirname, 'shakespearegpt-frontend/dist', 'index.html'));
 });
 
 // Root route
@@ -167,10 +181,12 @@ app.post('/api/chat', async (req, res) => {
         const text = response.text();
         res.json({ reply: text });
     } catch (error) {
+        console.error(`[Gemini API Error] ${error.message}`); // Add error logging
         res.status(500).json({ error: error.message });
     }
 });
 
+// Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
