@@ -10,6 +10,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
+import profileRoutes from './routes/profile.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -53,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'shakespearegpt-frontend/dist')));
 // API Routes
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
+app.use('/profile', profileRoutes);
 
 // Handle frontend routes (React fallback for SPA)
 app.get('*', (req, res) => {
