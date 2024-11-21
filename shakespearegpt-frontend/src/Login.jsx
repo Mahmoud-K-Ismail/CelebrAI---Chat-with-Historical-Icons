@@ -1,56 +1,38 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ apiUrl }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
+const Login = () => {
+    const [formData, setFormData] = useState({ username: '', password: '' });
+    const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login attempt:', { username, password }); // Debugging log
-
         try {
-            const response = await fetch(`${apiUrl}/auth/login`, {
+            const response = await fetch('/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify(formData),
             });
-            const data = await response.json();
-
-            console.log('Login response:', data); // Debugging log
             if (response.ok) {
-                setMessage('Login successful!');
-                // Redirect to chat page or set logged-in state
-                window.location.href = '/chat';
+                navigate('/chat');
             } else {
-                setMessage(data.message);
+                alert('Login failed!');
             }
-        } catch (error) {
-            console.error('Error during login:', error.message); // Debugging log
-            setMessage('An error occurred. Please try again.');
+        } catch (err) {
+            console.error(err);
         }
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Login</button>
-            </form>
-            {message && <p>{message}</p>}
-        </div>
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="username" placeholder="Username" onChange={handleChange} />
+            <input type="password" name="password" placeholder="Password" onChange={handleChange} />
+            <button type="submit">Login</button>
+        </form>
     );
 };
 

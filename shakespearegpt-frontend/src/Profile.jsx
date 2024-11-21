@@ -1,68 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
-const Profile = ({ apiUrl }) => {
-    const [profile, setProfile] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+const Profile = () => {
+    const [formData, setFormData] = useState({ username: '', password: '' });
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await fetch(`${apiUrl}/profile`, {
-                    method: 'GET',
-                    credentials: 'include', // Ensure session cookies are sent
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch profile');
+                const response = await fetch('/profile');
+                if (response.ok) {
+                    const data = await response.json();
+                    setFormData({ username: data.username });
                 }
-                const data = await response.json();
-                setProfile(data);
-                console.log('Fetched profile:', data); // Debugging log
             } catch (err) {
-                console.error('Error fetching profile:', err.message); // Debugging log
-                setError('Failed to load profile. Please try again.');
-            } finally {
-                setLoading(false);
+                console.error(err);
             }
         };
-
         fetchProfile();
-    }, [apiUrl]);
+    }, []);
 
-    if (loading) {
-        return <p>Loading profile...</p>;
-    }
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    if (error) {
-        return <p>{error}</p>;
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('/profile/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+            if (response.ok) {
+                alert('Profile updated!');
+            } else {
+                alert('Update failed!');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
-        <div>
-            <h1>User Profile</h1>
-            {profile ? (
-                <div>
-                    <p><strong>Username:</strong> {profile.username}</p>
-                    <h2>Past Conversations</h2>
-                    <ul>
-                        {profile.conversations.map((conversation) => (
-                            <li key={conversation.id}>
-                                <strong>Character:</strong> {conversation.character} -
-                                <strong>Messages:</strong> {conversation.messagesCount}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ) : (
-                <p>No profile data available.</p>
-            )}
-        </div>
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="username" value={formData.username} onChange={handleChange} />
+            <input type="password" name="password" placeholder="New Password" onChange={handleChange} />
+            <button type="submit">Update Profile</button>
+        </form>
     );
-};
-
-Profile.propTypes = {
-    apiUrl: PropTypes.string.isRequired, // Ensure apiUrl is provided
 };
 
 export default Profile;

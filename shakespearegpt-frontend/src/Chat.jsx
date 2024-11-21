@@ -1,143 +1,196 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
 import './Chat.css';
 
-function Chat({ apiUrl }) {
-    console.log('API URL in Chat:', apiUrl); // Debugging log
+const Chat = () => {
+    const [message, setMessage] = useState('');
+    const [messagesCache, setMessagesCache] = useState({});
+    const [history, setHistory] = useState([]);
+    const [activeConversationId, setActiveConversationId] = useState(null);
+    const [dropdownVisible, setDropdownVisible] = useState(false);
 
-    const [input, setInput] = useState('');
-    const [messages, setMessages] = useState([]);
-    const [chatHistory, setChatHistory] = useState([]);
-
-    // Fetch chat history on component load
     useEffect(() => {
-        const fetchChatHistory = async () => {
+        const fetchHistory = async () => {
             try {
-                console.log('Fetching chat history from:', `${apiUrl}/chat/history`); // Debugging log
-                const response = await fetch(`${apiUrl}/chat/history`, {
+                const response = await fetch('/chat/history', {
                     method: 'GET',
-                    credentials: 'include', // Include session cookies
+                    credentials: 'include',
                 });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch chat history');
+                if (response.ok) {
+                    const data = await response.json();
+                    setHistory(data.history);
+                    if (data.history.length > 0) {
+                        const firstConversation = data.history[0];
+                        setActiveConversationId(firstConversation._id);
+                        setMessagesCache((prev) => ({
+                            ...prev,
+                            [firstConversation._id]: firstConversation.messages,
+                        }));
+                    }
                 }
-
-                const data = await response.json();
-                console.log('Chat history fetched:', data.history); // Debugging log
-
-                // Transform history into a flat message array
-                const historyMessages = data.history.flatMap((conversation) =>
-                    conversation.messages.map((msg) => ({
-                        text: msg.content,
-                        user: msg.isUser,
-                    }))
-                );
-
-                setMessages(historyMessages);
-            } catch (error) {
-                console.error('Error fetching chat history:', error.message); // Debugging log
+            } catch (err) {
+                console.error('Error fetching chat history:', err);
             }
         };
+        fetchHistory();
+    }, []);
 
-        fetchChatHistory();
-    }, [apiUrl]);
-
-    // Handle message submission
-    const handleSubmit = async (e) => {
+    const handleSend = async (e) => {
         e.preventDefault();
-
-        const userMessage = input; // Save the user's message
-        setInput(''); // Clear input field
-
-        // Add user message to state
-        setMessages((prevMessages) => [...prevMessages, { text: userMessage, user: true }]);
+        const trimmedMessage = message.trim();
+        if (!trimmedMessage || !activeConversationId) return;
 
         try {
-            console.log('Sending message:', userMessage); // Debugging log
-
-            const response = await fetch(`${apiUrl}/api/chat`, {
+            const response = await fetch('/chat/message', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message: userMessage }),
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ message: trimmedMessage }),
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to get response from the server');
+            if (response.ok) {
+                const data = await response.json();
+                const updatedMessages = [
+                    ...(messagesCache[activeConversationId] || []),
+                    { content: trimmedMessage, isUser: true },
+                    { content: data.aiResponse, isUser: false },
+                ];
+                setMessagesCache((prev) => ({
+                    ...prev,
+                    [activeConversationId]: updatedMessages,
+                }));
+                setMessage('');
             }
-
-            const data = await response.json();
-            console.log('Received response from API:', data); // Debugging log
-
-            // Add AI response to state
-            setMessages((prevMessages) => [
-                ...prevMessages,
-                { text: data.reply, user: false },
-            ]);
-        } catch (error) {
-            console.error('Error sending message:', error.message); // Debugging log
-            setMessages((prevMessages) => [
-                ...prevMessages,
-                { text: 'Error: Unable to get a response.', user: false },
-            ]);
+        } catch (err) {
+            console.error('Error sending message:', err);
         }
     };
 
+    const handleStartNewChat = async () => {
+        try {
+            const response = await fetch('/chat/start', {
+                method: 'POST',
+                credentials: 'include',
+            });
 
-    const handleLogout = () => {
-        console.log('Logging out user'); // Debugging log
-        window.location.href = '/'; // Redirect to home page
+            if (response.ok) {
+                const newConversation = await response.json();
+                setHistory([newConversation, ...history]);
+                setActiveConversationId(newConversation._id);
+                setMessagesCache((prev) => ({
+                    ...prev,
+                    [newConversation._id]: [], // Initialize messages for the new chat
+                }));
+            }
+        } catch (err) {
+            console.error('Error starting new chat:', err);
+        }
     };
 
-    return (
-        <div>
-            <h1>ShakespeareGPT Chat</h1>
-            <button onClick={handleLogout} style={{ marginBottom: '10px' }}>
-                Logout
-            </button>
+    const loadConversation = (conversation) => {
+        setActiveConversationId(conversation._id);
+    };
 
-            <div>
-                <h2>Chat History</h2>
-                {chatHistory.map((conversation, index) => (
-                    <div key={conversation.id}>
-                        <h3>{`Conversation with ${conversation.character}`}</h3>
-                        <ul>
-                            {conversation.messages.map((msg, msgIndex) => (
-                                <li key={msgIndex} className={msg.isUser ? 'user' : 'bot'}>
-                                    {msg.content} <span>({new Date(msg.timestamp).toLocaleString()})</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <hr />
+    const deleteConversation = async (conversationId) => {
+        try {
+            const response = await fetch(`/chat/delete/${conversationId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                setHistory((prevHistory) => prevHistory.filter((conv) => conv._id !== conversationId));
+                if (activeConversationId === conversationId) {
+                    setActiveConversationId(null);
+                    setMessagesCache((prev) => {
+                        const updatedCache = { ...prev };
+                        delete updatedCache[conversationId];
+                        return updatedCache;
+                    });
+                }
+            } else {
+                alert('Failed to delete conversation.');
+            }
+        } catch (err) {
+            console.error('Error deleting conversation:', err);
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/auth/logout', {
+                method: 'POST',
+                credentials: 'include',
+            });
+            if (response.ok) {
+                window.location.href = '/login';
+            } else {
+                alert('Logout failed!');
+            }
+        } catch (err) {
+            console.error('Error logging out:', err);
+        }
+    };
+
+    const handleAccountSettings = () => {
+        alert('Account Settings Coming Soon!');
+    };
+
+    const toggleDropdown = () => {
+        setDropdownVisible((prev) => !prev);
+    };
+
+    const messages = messagesCache[activeConversationId] || [];
+
+    return (
+        <div className="chat-page">
+            <div className="header">
+                <div className="user-menu" onClick={toggleDropdown}>
+                    <span className="user-icon">👤</span>
+                    {dropdownVisible && (
+                        <div className="dropdown">
+                            <button onClick={handleLogout}>Logout</button>
+                            <button onClick={handleAccountSettings}>Account Settings</button>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="sidebar">
+                <h3>Chat History</h3>
+                <button onClick={handleStartNewChat} className="new-chat-button">Start New Chat</button>
+                {history.map((conv, index) => (
+                    <div onClick={() => loadConversation(conv)}
+                        key={index}
+                        className={`history-item ${conv._id === activeConversationId ? 'active' : ''}`}
+                    >
+                        <span>
+                            {conv.character || `Conversation ${index + 1}`}
+                        </span>
+                        <button onClick={() => deleteConversation(conv._id)} className="delete-button">🗑️</button>
                     </div>
                 ))}
             </div>
 
             <div className="chat-container">
-                <h2>Current Conversation</h2>
-                {messages.map((message, index) => (
-                    <div key={index} className={`message ${message.user ? 'user' : 'bot'}`}>
-                        {message.text}
-                    </div>
-                ))}
+                <div className="messages">
+                    {messages.map((msg, index) => (
+                        <div key={index} className={`message ${msg.isUser ? 'user' : 'bot'}`}>
+                            {msg.content}
+                        </div>
+                    ))}
+                </div>
+                <form onSubmit={handleSend}>
+                    <input
+                        type="text"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Type your message..."
+                        disabled={!activeConversationId}
+                    />
+                    <button type="submit" disabled={!activeConversationId}>Send</button>
+                </form>
             </div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Type your message..."
-                />
-                <button type="submit">Send</button>
-            </form>
         </div>
     );
-}
-
-Chat.propTypes = {
-    apiUrl: PropTypes.string.isRequired, // Add prop validation
 };
 
 export default Chat;

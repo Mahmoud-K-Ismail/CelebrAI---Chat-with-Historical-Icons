@@ -1,98 +1,37 @@
-// import React, { useState } from 'react';
-//
-// function Register() {
-//     const [username, setUsername] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [message, setMessage] = useState('');
-//
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         try {
-//             const response = await fetch('/auth/register', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify({ username, password }),
-//             });
-//             const data = await response.json();
-//             setMessage(data.message);
-//         } catch (error) {
-//             setMessage('Registration failed');
-//         }
-//     };
-//
-//     return (
-//         <div>
-//             <h2>Register</h2>
-//             <form onSubmit={handleSubmit}>
-//                 <input
-//                     type="text"
-//                     value={username}
-//                     onChange={(e) => setUsername(e.target.value)}
-//                     placeholder="Username"
-//                     required
-//                 />
-//                 <input
-//                     type="password"
-//                     value={password}
-//                     onChange={(e) => setPassword(e.target.value)}
-//                     placeholder="Password"
-//                     required
-//                 />
-//                 <button type="submit">Register</button>
-//             </form>
-//             {message && <p>{message}</p>}
-//         </div>
-//     );
-// }
-//
-// export default Register;
-
-// Register.jsx
-import { useState } from 'react';
-
-const API = import.meta.env.VITE_BACKEND_URL;
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({ username: '', password: '' });
+    const navigate = useNavigate();
 
-    const handleRegister = async (e) => {
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${API}/auth/register`, {
+            const response = await fetch('/auth/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
             });
-
             if (response.ok) {
-                console.log('User registered successfully');
+                alert('Registration successful!');
+                navigate('/login');
             } else {
-                console.error('Registration failed');
+                alert('Registration failed!');
             }
-        } catch (error) {
-            console.error('Error during registration:', error);
+        } catch (err) {
+            console.error(err);
         }
     };
 
     return (
-        <form onSubmit={handleRegister}>
-            <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-            />
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-            />
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="username" placeholder="Username" onChange={handleChange} />
+            <input type="password" name="password" placeholder="Password" onChange={handleChange} />
             <button type="submit">Register</button>
         </form>
     );

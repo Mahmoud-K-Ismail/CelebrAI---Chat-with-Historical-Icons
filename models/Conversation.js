@@ -16,3 +16,19 @@ const ConversationSchema = new mongoose.Schema({
 const Conversation = mongoose.model('Conversation', ConversationSchema);
 
 export default Conversation;
+// import mongoose from 'mongoose';
+//
+// const messageSchema = new mongoose.Schema({
+//     content: { type: String, required: true },
+//     isUser: { type: Boolean, required: true },
+// }, { timestamps: true });
+//
+// const conversationSchema = new mongoose.Schema({
+//     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+//     character: { type: String, default: 'Gemini Bot' },
+//     messages: [messageSchema],
+// }, { timestamps: true });
+//
+// const Conversation = mongoose.model('Conversation', conversationSchema);
+//
+// export default Conversation;
