@@ -9,6 +9,7 @@
 //     const [dropdownVisible, setDropdownVisible] = useState(false);
 //     const [loading, setLoading] = useState(false);
 //     const [editingConversationId, setEditingConversationId] = useState(null);
+//     const [editingValue, setEditingValue] = useState(''); // State to track the input value while editing
 //
 //     useEffect(() => {
 //         const fetchHistory = async () => {
@@ -143,16 +144,40 @@
 //         }
 //     };
 //
-//     const handleEditName = (conversationId) => {
-//         setEditingConversationId(conversationId);
+//     const handleEditName = (conversation) => {
+//         setEditingConversationId(conversation._id);
+//         setEditingValue(conversation.character); // Set the initial input value to the current conversation name
+//     };
+//
+//     const handleLogout = async () => {
+//         try {
+//             console.log('Attempting to log out...');
+//             const response = await fetch('/auth/logout', {
+//                 method: 'POST',
+//                 credentials: 'include',
+//             });
+//
+//             if (response.ok) {
+//                 console.log('Logout successful. Redirecting to login...');
+//                 window.location.href = '/login';
+//             } else {
+//                 const errorData = await response.json();
+//                 console.error('Logout failed:', errorData.message || response.statusText);
+//                 alert(`Logout failed: ${errorData.message || 'Unexpected error'}`);
+//             }
+//         } catch (err) {
+//             console.error('Error logging out:', err);
+//             alert('An error occurred while logging out.');
+//         }
 //     };
 //
 //     const handleUpdateName = async (conversationId, newName) => {
-//         setEditingConversationId(null);
 //         if (newName.trim() === '') {
 //             alert('Conversation name cannot be empty.');
 //             return;
 //         }
+//
+//         setEditingConversationId(null); // Close the editing input field
 //
 //         try {
 //             const response = await fetch(`/chat/update/${conversationId}`, {
@@ -163,12 +188,18 @@
 //             });
 //
 //             if (response.ok) {
-//                 const updatedConversation = await response.json();
+//                 const updatedConversation = await response.json(); // Directly get the updated conversation object
+//
+//                 // Update the `history` state dynamically with the updated character name
 //                 setHistory((prevHistory) =>
 //                     prevHistory.map((conv) =>
-//                         conv._id === conversationId ? { ...conv, character: updatedConversation.character } : conv
+//                         conv._id === conversationId
+//                             ? { ...conv, character: updatedConversation.character }
+//                             : conv
 //                     )
 //                 );
+//
+//                 console.log(`Conversation ${conversationId} updated to name: ${updatedConversation.character}`);
 //             } else {
 //                 console.error('Failed to update conversation name.');
 //             }
@@ -208,7 +239,7 @@
 //             <div className="sidebar">
 //                 <h3>Chat History</h3>
 //                 <button onClick={handleStartNewChat} className="new-chat-button">Start New Chat</button>
-//                 {history.map((conv, index) => (
+//                 {history.map((conv) => (
 //                     <div
 //                         key={conv._id}
 //                         className={`history-item ${conv._id === activeConversationId ? 'active' : ''}`}
@@ -217,22 +248,24 @@
 //                         {editingConversationId === conv._id ? (
 //                             <input
 //                                 type="text"
-//                                 defaultValue={conv.character}
-//                                 onBlur={(e) => handleUpdateName(conv._id, e.target.value)}
+//                                 value={editingValue} // Controlled input value
+//                                 onChange={(e) => setEditingValue(e.target.value)} // Update input field
+//                                 onBlur={() => handleUpdateName(conv._id, editingValue)} // Save on blur
 //                                 autoFocus
 //                                 onKeyDown={(e) => {
 //                                     if (e.key === 'Enter') {
-//                                         handleUpdateName(conv._id, e.target.value);
+//                                         handleUpdateName(conv._id, editingValue); // Save on Enter
 //                                     }
 //                                 }}
 //                             />
 //                         ) : (
-//                             <span>{conv.character || `Conversation ${index + 1}`}</span>
+//                             <span>{conv.character || 'Unnamed Conversation'}</span>
 //                         )}
+//
 //                         <button
 //                             onClick={(e) => {
-//                                 e.stopPropagation(); // Prevent triggering loadConversation
-//                                 handleEditName(conv._id);
+//                                 e.stopPropagation();
+//                                 handleEditName(conv);
 //                             }}
 //                             className="edit-button"
 //                         >
@@ -240,7 +273,7 @@
 //                         </button>
 //                         <button
 //                             onClick={(e) => {
-//                                 e.stopPropagation(); // Prevent triggering loadConversation
+//                                 e.stopPropagation();
 //                                 deleteConversation(conv._id);
 //                             }}
 //                             className="delete-button"
@@ -278,7 +311,10 @@
 // };
 //
 // export default Chat;
-import React, { useState, useEffect } from 'react';
+
+
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Chat.css';
 
 const Chat = () => {
@@ -289,7 +325,9 @@ const Chat = () => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [editingConversationId, setEditingConversationId] = useState(null);
-    const [editingValue, setEditingValue] = useState(''); // State to track the input value while editing
+    const [editingValue, setEditingValue] = useState('');
+    const dropdownRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -319,6 +357,18 @@ const Chat = () => {
             }
         };
         fetchHistory();
+    }, []);
+
+    // Handle click outside dropdown
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownVisible(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
     const handleSend = async (e) => {
@@ -426,23 +476,20 @@ const Chat = () => {
 
     const handleEditName = (conversation) => {
         setEditingConversationId(conversation._id);
-        setEditingValue(conversation.character); // Set the initial input value to the current conversation name
+        setEditingValue(conversation.character);
     };
 
     const handleLogout = async () => {
         try {
-            console.log('Attempting to log out...');
             const response = await fetch('/auth/logout', {
                 method: 'POST',
                 credentials: 'include',
             });
 
             if (response.ok) {
-                console.log('Logout successful. Redirecting to login...');
                 window.location.href = '/login';
             } else {
                 const errorData = await response.json();
-                console.error('Logout failed:', errorData.message || response.statusText);
                 alert(`Logout failed: ${errorData.message || 'Unexpected error'}`);
             }
         } catch (err) {
@@ -457,7 +504,7 @@ const Chat = () => {
             return;
         }
 
-        setEditingConversationId(null); // Close the editing input field
+        setEditingConversationId(null);
 
         try {
             const response = await fetch(`/chat/update/${conversationId}`, {
@@ -468,9 +515,7 @@ const Chat = () => {
             });
 
             if (response.ok) {
-                const updatedConversation = await response.json(); // Directly get the updated conversation object
-
-                // Update the `history` state dynamically with the updated character name
+                const updatedConversation = await response.json();
                 setHistory((prevHistory) =>
                     prevHistory.map((conv) =>
                         conv._id === conversationId
@@ -478,8 +523,6 @@ const Chat = () => {
                             : conv
                     )
                 );
-
-                console.log(`Conversation ${conversationId} updated to name: ${updatedConversation.character}`);
             } else {
                 console.error('Failed to update conversation name.');
             }
@@ -490,6 +533,11 @@ const Chat = () => {
 
     const toggleDropdown = () => {
         setDropdownVisible((prev) => !prev);
+    };
+
+    const handleSettingsClick = () => {
+        navigate('/settings');
+        setDropdownVisible(false);
     };
 
     const parseMessageContent = (content) => {
@@ -507,10 +555,11 @@ const Chat = () => {
     return (
         <div className="chat-page">
             <div className="header">
-                <div className="user-menu" onClick={toggleDropdown}>
-                    <span className="user-icon">👤</span>
+                <div className="user-menu" ref={dropdownRef}>
+                    <span className="user-icon" onClick={toggleDropdown}>👤</span>
                     {dropdownVisible && (
                         <div className="dropdown">
+                            <button onClick={handleSettingsClick}>User Settings</button>
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     )}
@@ -528,13 +577,13 @@ const Chat = () => {
                         {editingConversationId === conv._id ? (
                             <input
                                 type="text"
-                                value={editingValue} // Controlled input value
-                                onChange={(e) => setEditingValue(e.target.value)} // Update input field
-                                onBlur={() => handleUpdateName(conv._id, editingValue)} // Save on blur
+                                value={editingValue}
+                                onChange={(e) => setEditingValue(e.target.value)}
+                                onBlur={() => handleUpdateName(conv._id, editingValue)}
                                 autoFocus
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
-                                        handleUpdateName(conv._id, editingValue); // Save on Enter
+                                        handleUpdateName(conv._id, editingValue);
                                     }
                                 }}
                             />
