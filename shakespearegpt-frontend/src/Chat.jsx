@@ -1,4 +1,3 @@
-// export default Chat;
 import React, { useState, useEffect } from 'react';
 import './Chat.css';
 
@@ -8,12 +7,11 @@ const Chat = () => {
     const [history, setHistory] = useState([]);
     const [activeConversationId, setActiveConversationId] = useState(null);
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const [loading, setLoading] = useState(false); // Track typing indicator
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchHistory = async () => {
             try {
-                console.log('Fetching chat history...');
                 const response = await fetch('/chat/history', {
                     method: 'GET',
                     credentials: 'include',
@@ -21,22 +19,15 @@ const Chat = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('Chat history fetched successfully:', data);
-
                     setHistory(data.history);
 
-                    // Ensure there is at least one conversation
                     if (data.history.length > 0) {
                         const firstConversation = data.history[0];
-                        console.log('Setting first conversation as active:', firstConversation);
-
                         setActiveConversationId(firstConversation._id);
                         setMessagesCache((prev) => ({
                             ...prev,
                             [firstConversation._id]: firstConversation.messages,
                         }));
-                    } else {
-                        console.log('No conversations found.');
                     }
                 } else {
                     console.error('Failed to fetch chat history:', response.status);
@@ -57,16 +48,13 @@ const Chat = () => {
             return;
         }
 
-        console.log('Sending message:', trimmedMessage, 'to conversation:', activeConversationId);
-
-        // Immediately display the user's message
         const userMessage = { content: trimmedMessage, isUser: true };
         setMessagesCache((prev) => ({
             ...prev,
             [activeConversationId]: [...(prev[activeConversationId] || []), userMessage],
         }));
         setMessage('');
-        setLoading(true); // Show typing indicator
+        setLoading(true);
 
         try {
             const response = await fetch('/chat/message', {
@@ -78,8 +66,6 @@ const Chat = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('AI response received:', data.reply);
-
                 const aiMessage = { content: data.reply, isUser: false };
                 setMessagesCache((prev) => ({
                     ...prev,
@@ -87,20 +73,18 @@ const Chat = () => {
                 }));
             } else {
                 const errorData = await response.json();
-                console.error('Error sending message:', errorData.message);
                 alert(`Failed to send message: ${errorData.message}`);
             }
         } catch (err) {
             console.error('Error sending message:', err);
             alert('An error occurred while sending the message. Please try again.');
         } finally {
-            setLoading(false); // Remove typing indicator
+            setLoading(false);
         }
     };
 
     const handleStartNewChat = async () => {
         try {
-            console.log('Starting a new conversation...');
             const response = await fetch('/chat/start', {
                 method: 'POST',
                 credentials: 'include',
@@ -108,16 +92,13 @@ const Chat = () => {
 
             if (response.ok) {
                 const newConversation = await response.json();
-                console.log('New conversation started:', newConversation);
-
                 setHistory((prevHistory) => [newConversation, ...prevHistory]);
                 setActiveConversationId(newConversation._id);
                 setMessagesCache((prev) => ({
                     ...prev,
-                    [newConversation._id]: [], // Initialize messages for the new chat
+                    [newConversation._id]: [],
                 }));
             } else {
-                console.error('Failed to start a new chat:', response.status);
                 alert('Failed to start a new chat.');
             }
         } catch (err) {
@@ -126,36 +107,26 @@ const Chat = () => {
     };
 
     const loadConversation = (conversation) => {
-        console.log('Loading conversation:', conversation);
-
-        // Set the active conversation ID
         setActiveConversationId(conversation._id);
 
-        // Check if the messages for this conversation are already in the cache
         if (!messagesCache[conversation._id]) {
-            console.log('Messages not in cache. Loading from history.');
             setMessagesCache((prev) => ({
                 ...prev,
-                [conversation._id]: conversation.messages, // Load messages from the conversation
+                [conversation._id]: conversation.messages,
             }));
         }
-
-        console.log('Updated messagesCache:', messagesCache);
     };
 
     const deleteConversation = async (conversationId) => {
         try {
-            console.log('Deleting conversation:', conversationId);
             const response = await fetch(`/chat/delete/${conversationId}`, {
                 method: 'DELETE',
                 credentials: 'include',
             });
 
             if (response.ok) {
-                console.log('Conversation deleted successfully:', conversationId);
                 setHistory((prevHistory) => prevHistory.filter((conv) => conv._id !== conversationId));
                 if (activeConversationId === conversationId) {
-                    console.log('Deleted active conversation. Clearing active state.');
                     setActiveConversationId(null);
                     setMessagesCache((prev) => {
                         const updatedCache = { ...prev };
@@ -164,7 +135,6 @@ const Chat = () => {
                     });
                 }
             } else {
-                console.error('Failed to delete conversation:', response.status);
                 alert('Failed to delete conversation.');
             }
         } catch (err) {
@@ -174,16 +144,13 @@ const Chat = () => {
 
     const handleLogout = async () => {
         try {
-            console.log('Logging out...');
             const response = await fetch('/auth/logout', {
                 method: 'POST',
                 credentials: 'include',
             });
             if (response.ok) {
-                console.log('Logout successful. Redirecting to login...');
                 window.location.href = '/login';
             } else {
-                console.error('Logout failed:', response.status);
                 alert('Logout failed!');
             }
         } catch (err) {
@@ -193,6 +160,16 @@ const Chat = () => {
 
     const toggleDropdown = () => {
         setDropdownVisible((prev) => !prev);
+    };
+
+    const parseMessageContent = (content) => {
+        const formattedContent = content
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/`(.*?)`/g, '<code>$1</code>')
+            .replace(/\n/g, '<br>');
+
+        return <span dangerouslySetInnerHTML={{ __html: formattedContent }} />;
     };
 
     const messages = messagesCache[activeConversationId] || [];
@@ -229,7 +206,7 @@ const Chat = () => {
                     {loading && <div className="message bot"><em>Typing...</em></div>}
                     {messages.map((msg, index) => (
                         <div key={index} className={`message ${msg.isUser ? 'user' : 'bot'}`}>
-                            {msg.content}
+                            {msg.isUser ? msg.content : parseMessageContent(msg.content)}
                         </div>
                     )).reverse()}
                 </div>
