@@ -5,6 +5,8 @@ import Login from './Login';
 import Register from './Register';
 import Chat from './Chat';
 import Profile from './Profile';
+import UserSettings from './UserSettings';
+
 
 const App = () => (
     <Router>
@@ -14,6 +16,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<UserSettings />} />
         </Routes>
     </Router>
 );

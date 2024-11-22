@@ -49,5 +49,72 @@ router.post('/logout', (req, res) => {
         });
     });
 });
+// PATCH /auth/update-username - Update username
+router.patch('/update-username', async (req, res) => {
+    try {
+        const userId = req.user?._id;
+        const { newUsername, currentPassword } = req.body;
 
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Verify current password
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Current password is incorrect' });
+        }
+
+        // Check if username is already taken
+        const existingUser = await User.findOne({ username: newUsername });
+        if (existingUser && existingUser._id.toString() !== userId.toString()) {
+            return res.status(400).json({ message: 'Username is already taken' });
+        }
+
+        // Update username
+        user.username = newUsername;
+        await user.save();
+
+        res.status(200).json({ message: 'Username updated successfully' });
+    } catch (error) {
+        console.error('Error updating username:', error);
+        res.status(500).json({ message: 'Failed to update username' });
+    }
+});
+
+router.patch('/update-password', async (req, res) => {
+    try {
+        const userId = req.user?._id;
+        const { currentPassword, newPassword } = req.body;
+
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Verify current password
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Current password is incorrect' });
+        }
+
+        // Use the new setPassword method instead of directly setting the password
+        user.password = newPassword;
+        await user.save();
+
+        res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.error('Error updating password:', error);
+        res.status(500).json({ message: 'Failed to update password' });
+    }
+});
 export default router;
