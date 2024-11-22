@@ -131,5 +131,43 @@ router.delete('/delete/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to delete conversation.', error: error.message });
     }
 });
+// PATCH /update/:id - Update the name of a conversation
+router.patch('/update/:id', async (req, res) => {
+    try {
+        const userId = req.user?._id; // Ensure the user is authenticated
+        const conversationId = req.params.id; // Get the conversation ID from request params
+        const { character } = req.body; // Get the new name from the request body
+
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        if (!character || character.trim() === '') {
+            return res.status(400).json({ message: 'Character name is required.' });
+        }
+
+        console.log(`Updating conversation ${conversationId} for user ${userId} with new name: ${character}`);
+
+        // Find and update the conversation's character name
+        const conversation = await Conversation.findOneAndUpdate(
+            { _id: conversationId, user: userId },
+            { character },
+            { new: true } // Return the updated document
+        );
+
+        if (!conversation) {
+            return res.status(404).json({ message: 'Conversation not found or not authorized to update.' });
+        }
+
+        console.log('Conversation updated successfully:', conversation);
+
+        // Send the updated conversation directly
+        res.status(200).json(conversation);
+    } catch (error) {
+        console.error('Error updating conversation:', error.message);
+        res.status(500).json({ message: 'Failed to update conversation.', error: error.message });
+    }
+});
+
 
 export default router;
