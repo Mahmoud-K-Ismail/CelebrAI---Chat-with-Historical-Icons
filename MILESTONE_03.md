@@ -21,7 +21,7 @@ Special Instructions for Form 1
     - Password: `test`
 - **Usage Instructions**:
     - The name of the conversation determines the character being depicted in the chat.
-    - You can edit conversation names to change the depicted character dynamically.
+    - You can edit conversation names to change the depicted character dynamically. (This is newly added, as a part of milestone 2).
 
 URL for form 2 (for current milestone)
 ---
