@@ -40,8 +40,8 @@ Special Instructions for Form 2
 
 URL(s) to GitHub repository with commits that show progress on research
 --- 
-1. [Commit 1](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/commit/d85589ab377bf55c425f079739dee70e6c9f42d2])
-2. [Commit 2](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/commit/a1974d4505fae426ebcd23bd6fdc408c75255c8d])
+1. [Commit 1](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/commit/d85589ab377bf55c425f079739dee70e6c9f42d2)
+2. [Commit 2](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/commit/2afd9ba4999c931a9d6565ea8fbf09ffdfe1a181)
 3. [Commit 3](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/commit/273e68089f96278b1c80ea2c81ca7d12014077e1)
 
 References
