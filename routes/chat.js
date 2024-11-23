@@ -5,7 +5,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const router = express.Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// POST /message - Send a message and generate AI response
 router.post('/message', async (req, res) => {
     try {
         const { conversationId, message } = req.body; // Get conversationId and message from request
@@ -21,24 +20,34 @@ router.post('/message', async (req, res) => {
 
         console.log('Received message:', message, 'for conversation:', conversationId);
 
-        // Find the conversation by ID and user
+        // Fetch the conversation to get the character name
         const conversation = await Conversation.findOne({ _id: conversationId, user: userId });
 
         if (!conversation) {
             return res.status(404).json({ message: 'Conversation not found.' });
         }
 
-        // Add the user's message to the conversation
-        conversation.messages.push({ content: message, isUser: true });
+        const characterName = conversation.character || 'Shakespeare'; // Default to Shakespeare if no character name
+
+        console.log(`Generating response in the style of ${characterName}...`);
+
+        // Construct the prompt for the character's style
+        const prompt = `
+You are ${characterName}. Write your response in their speaking style.
+User: "${message}"
+${characterName}:`;
 
         // Generate AI response using Gemini API
         console.log('Generating AI response...');
         const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-        const result = await model.generateContent(message);
+        const result = await model.generateContent(prompt);
         const response = await result.response;
         const aiResponse = await response.text();
 
-        // Add the AI response to the conversation
+        console.log(`Generated AI response in ${characterName}'s style:`, aiResponse);
+
+        // Add the user's message and AI's response to the conversation
+        conversation.messages.push({ content: message, isUser: true });
         conversation.messages.push({ content: aiResponse, isUser: false });
 
         // Save the updated conversation to the database
@@ -52,6 +61,7 @@ router.post('/message', async (req, res) => {
         res.status(500).json({ message: 'Failed to process message.', error: error.message });
     }
 });
+
 
 // GET /history - Fetch all conversations for the authenticated user
 router.get('/history', async (req, res) => {
