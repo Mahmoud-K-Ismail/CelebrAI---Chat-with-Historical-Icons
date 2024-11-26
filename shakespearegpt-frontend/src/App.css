@@ -1,41 +1,252 @@
+/* App.css */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+
+.App {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    width: 100%;
+}
+
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.home-container {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.link-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.link-container a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.link-container a.btn-primary {
+    background-color: #007bff;
+}
+
+.link-container a.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.link-container a.btn-secondary {
+    background-color: #6c757d;
+}
+
+.link-container a.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Adding Bootstrap container for spacing */
+.container {
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Login Page Styles */
+.login-container {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.login-container button {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #0056b3;
+}
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.auth-container button {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-container button:hover {
+    background-color: #0056b3;
+}
+
+/*!* App.css *!*/
+
+/*body, html {*/
+/*    height: 100%;*/
+/*    margin: 0;*/
+/*    font-family: 'Roboto', sans-serif;*/
+/*    overflow: hidden;*/
+/*}*/
+
 /*.App {*/
-/*  max-width: 600px;*/
-/*  margin: 0 auto;*/
-/*  padding: 20px;*/
+/*    height: 100vh;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    text-align: center;*/
+/*    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
+/*    background-size: 400% 400%;*/
+/*    animation: gradientBackground 15s ease infinite;*/
+/*    width: 100%;*/
 /*}*/
 
-/*.chat-container {*/
-/*  border: 1px solid #ccc;*/
-/*  padding: 10px;*/
-/*  height: 300px;*/
-/*  overflow-y: auto;*/
-/*  margin-bottom: 20px;*/
+/*@keyframes gradientBackground {*/
+/*    0% { background-position: 0% 50%; }*/
+/*    50% { background-position: 100% 50%; }*/
+/*    100% { background-position: 0% 50%; }*/
 /*}*/
 
-/*.message {*/
-/*  margin-bottom: 10px;*/
-/*  padding: 5px;*/
-/*  border-radius: 5px;*/
+/*.home-container {*/
+/*    background: rgba(255, 255, 255, 0.8);*/
+/*    border-radius: 10px;*/
+/*    padding: 50px;*/
+/*    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);*/
 /*}*/
 
-/*.user {*/
-/*  background-color: #e6f2ff;*/
-/*  text-align: right;*/
+/*h1 {*/
+/*    font-size: 3rem;*/
+/*    margin-bottom: 30px;*/
+/*    color: #333;*/
 /*}*/
 
-/*.bot {*/
-/*  background-color: #f0f0f0;*/
+/*.link-container {*/
+/*    margin-top: 30px;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    gap: 20px;*/
 /*}*/
 
-/*form {*/
-/*  display: flex;*/
+/*.link-container a {*/
+/*    text-decoration: none;*/
+/*    color: #ffffff;*/
+/*    font-weight: bold;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 5px;*/
+/*    transition: background-color 0.3s ease;*/
 /*}*/
 
-/*input {*/
-/*  flex-grow: 1;*/
-/*  padding: 5px;*/
+/*.link-container a.btn-primary {*/
+/*    background-color: #007bff;*/
 /*}*/
 
-/*button {*/
-/*  padding: 5px 10px;*/
+/*.link-container a.btn-primary:hover {*/
+/*    background-color: #0056b3;*/
+/*}*/
+
+/*.link-container a.btn-secondary {*/
+/*    background-color: #6c757d;*/
+/*}*/
+
+/*.link-container a.btn-secondary:hover {*/
+/*    background-color: #5a6268;*/
+/*}*/
+
+/*!* Adding Bootstrap container for spacing *!*/
+/*.container {*/
+/*    max-width: 600px;*/
+/*    width: 100%;*/
+/*}*/
+
+/*!* Login and Register Page Styles *!*/
+/*.auth-container {*/
+/*    background: rgba(255, 255, 255, 0.8);*/
+/*    border-radius: 10px;*/
+/*    padding: 50px;*/
+/*    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    width: 100%;*/
+/*    max-width: 400px;*/
+/*}*/
+
+/*.auth-container input {*/
+/*    width: 100%;*/
+/*    padding: 10px;*/
+/*    margin: 10px 0;*/
+/*    border-radius: 5px;*/
+/*    border: 1px solid #ccc;*/
+/*    font-size: 1rem;*/
+/*}*/
+
+/*.auth-container button {*/
+/*    background-color: #007bff;*/
+/*    color: #fff;*/
+/*    font-weight: bold;*/
+/*    padding: 10px 20px;*/
+/*    border: none;*/
+/*    border-radius: 5px;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.3s ease;*/
+/*}*/
+
+/*.auth-container button:hover {*/
+/*    background-color: #0056b3;*/
 /*}*/
