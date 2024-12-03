@@ -10,7 +10,7 @@ import profileRoutes from './routes/profile.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
-
+import { isAuthenticated } from './routes/auth.js';// Import the authentication middleware
 dotenv.config();
 connectDB();
 
@@ -35,8 +35,9 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'shakespearegpt-frontend/dist')));
 
 app.use('/auth', authRoutes);
-app.use('/chat', chatRoutes);
-app.use('/profile', profileRoutes);
+app.use('/chat', isAuthenticated, chatRoutes);  // Protect the chat route
+app.use('/profile', isAuthenticated, profileRoutes);  // Protect the profile route
+app.use('/settings', isAuthenticated, profileRoutes);  // Protect the profile route
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'shakespearegpt-frontend/dist', 'index.html'));

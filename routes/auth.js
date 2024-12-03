@@ -118,3 +118,11 @@ router.patch('/update-password', async (req, res) => {
     }
 });
 export default router;
+export function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        // If the user is authenticated, allow access to the next middleware/route
+        return next();
+    }
+    // If the user is not authenticated, redirect to the login page
+    res.redirect('/'); // or you could send a 401 Unauthorized response instead
+}
