@@ -1,3 +1,4 @@
+/* Global body and page styling */
 body, html {
     height: 100%;
     margin: 0;
@@ -17,20 +18,22 @@ body, html {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+/* Register container styling */
 .register-container {
     max-width: 400px;
     width: 100%;
     padding: 40px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     background: #C0C0C0; /* semi-transparent white */
-    /* If you want a fully transparent background, use rgba(255, 255, 255, 0) */
-    border-radius: 10px; /* Optional: Adds rounded corners */
+    border-radius: 10px;
 }
+
 .register-container form {
     box-shadow: none;
     background: rgba(255, 255, 255, 0); /* semi-transparent white */
-    padding: 20px; /* Optional: Add padding inside the form */
-    border-radius: 10px; /* Optional: Rounded corners for the form */
+    padding: 20px;
+    border-radius: 10px;
 }
 
 h2 {
@@ -38,16 +41,43 @@ h2 {
     color: #333;
 }
 
+/* Input styling */
 .register-container input {
     background-color: #E5E4E2;
     color: #333;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
-.register-container button {
+/* Register button styling */
+.register-main-btn {
     background-color: #007bf0;
     color: white;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.register-container button:hover {
+.register-main-btn:hover {
     background-color: #0056b3;
+}
+
+/* Register page hyperlink styles */
+.login-link a {
+    color: #007bff; /* Blue color for the link */
+    font-weight: bold;
+    text-decoration: none; /* Removes underline */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.login-link a:hover {
+    color: #0056b3; /* Darker blue on hover */
+    text-decoration: underline; /* Adds underline on hover */
 }

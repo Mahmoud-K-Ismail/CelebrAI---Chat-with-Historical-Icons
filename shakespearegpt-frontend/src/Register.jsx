@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure this is imported for Bootstrap styling
 import './Register.css'; // If you have any additional custom styles
 
@@ -53,8 +53,13 @@ const Register = () => {
                             onChange={handleChange}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">Register</button>
+                    <button type="submit" className="register-main-btn w-100">Register</button>
                 </form>
+
+                {/* Already registered? Login hyperlink */}
+                <div className="login-link text-center mt-3">
+                    <p>Already have an account? <Link to="/login">Login here</Link></p>
+                </div>
             </div>
         </div>
     );
