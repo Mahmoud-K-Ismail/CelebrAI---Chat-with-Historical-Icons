@@ -126,3 +126,30 @@ export function isAuthenticated(req, res, next) {
     // If the user is not authenticated, redirect to the login page
     res.redirect('/'); // or you could send a 401 Unauthorized response instead
 }
+// middleware/authRedirect.js
+
+export const checkAlreadyLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return res.redirect('/chat');// Redirect to chat page if the user is logged in
+    }
+    next(); // Proceed to the next route handler if not logged in
+};
+// Add this to your auth.js file
+
+export const logoutIfLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        req.logout((err) => {
+            if (err) {
+                console.error('Logout error:', err);
+                return res.status(500).json({ message: 'Failed to logout' });
+            }
+            req.session.destroy(() => {
+                res.clearCookie('connect.sid'); // Clear session cookie
+                console.log('User logged out');
+                next(); // Continue with the next middleware (serve the frontend)
+            });
+        });
+    } else {
+        next(); // Continue with the next middleware if not logged in
+    }
+};

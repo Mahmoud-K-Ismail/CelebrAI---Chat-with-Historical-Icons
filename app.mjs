@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import connectDB from './db.js';
 import session from 'express-session';
 import passport from './config/passport.js';
-import authRoutes from './routes/auth.js';
+import authRoutes, {checkAlreadyLoggedIn} from './routes/auth.js';
 import chatRoutes from './routes/chat.js';
 import profileRoutes from './routes/profile.js';
 import dotenv from 'dotenv';
@@ -38,6 +38,9 @@ app.use('/auth', authRoutes);
 app.use('/chat', isAuthenticated, chatRoutes);  // Protect the chat route
 app.use('/profile', isAuthenticated, profileRoutes);  // Protect the profile route
 app.use('/settings', isAuthenticated, profileRoutes);  // Protect the profile route
+
+app.use('/register', checkAlreadyLoggedIn, profileRoutes);  // Protect the profile route
+app.use('/login', checkAlreadyLoggedIn, profileRoutes);  // Protect the profile route
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'shakespearegpt-frontend/dist', 'index.html'));
