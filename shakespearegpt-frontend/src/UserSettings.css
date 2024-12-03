@@ -1,107 +1,22 @@
-.settings-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.settings-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.back-button {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 20px;
-}
-
-.back-button:hover {
-    text-decoration: underline;
-}
-
-.settings-section {
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-.error-message {
-    background-color: #ff53533d;
-    color: #dc3545;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-}
-
-.success-message {
-    background-color: #28a7453d;
-    color: #28a745;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-}
-
-
-        /*This makes chat ruined*/
-/*!* UserSettings.css *!*/
-
+/*!* General body and html styles *!*/
 /*body, html {*/
 /*    height: 100%;*/
 /*    margin: 0;*/
 /*    font-family: 'Roboto', sans-serif;*/
-/*    overflow: hidden;*/
+/*    overflow: auto; !* Allow scrolling *!*/
 /*}*/
 
-/*.settings-container {*/
-/*    height: 100vh;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    text-align: center;*/
+/*!* Settings page gradient background *!*/
+/*.settings-page {*/
+/*    min-height: 100vh; !* Ensure the page takes at least 100% height *!*/
 /*    background: linear-gradient(-45deg, #2c2c2c, #4a4a4a, #6e6e6e, #8c8c8c);*/
 /*    background-size: 400% 400%;*/
 /*    animation: gradientBackground 15s ease infinite;*/
-/*    padding: 20px;*/
-/*    box-sizing: border-box;*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: column; !* Stack items vertically *!*/
+/*    justify-content: flex-start; !* Align items to the top *!*/
+/*    padding-bottom: 20px; !* Some space at the bottom *!*/
 /*}*/
 
 /*@keyframes gradientBackground {*/
@@ -110,120 +25,410 @@ button:hover {
 /*    100% { background-position: 0% 50%; }*/
 /*}*/
 
+/*!* Settings container styles *!*/
+/*.settings-container {*/
+/*    max-width: 800px;*/
+/*    margin: 0 auto;*/
+/*    padding: 20px;*/
+/*    background-color: rgba(255, 255, 255, 0.9); !* Light transparent background *!*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+/*    margin-bottom: 20px; !* Add margin to the bottom to space out sections *!*/
+/*}*/
+
+/*!* Settings header styles *!*/
 /*.settings-header {*/
-/*    width: 100%;*/
 /*    display: flex;*/
-/*    justify-content: center;*/
 /*    align-items: center;*/
-/*    margin-bottom: 20px;*/
-/*    position: relative;*/
+/*    margin-bottom: 30px;*/
+/*    justify-content: space-between;*/
 /*}*/
 
 /*.back-button {*/
-/*    position: absolute;*/
-/*    left: 0;*/
-/*    background-color: #6c757d;*/
-/*    width: 150px;*/
-/*    height: 50px;*/
+/*    background-color: #007bff;*/
 /*    color: #fff;*/
-/*    font-weight: bold;*/
-/*    padding: 10px 20px;*/
 /*    border: none;*/
-/*    border-radius: 5px;*/
 /*    cursor: pointer;*/
+/*    font-size: 16px;*/
+/*    padding: 8px 12px;*/
+/*    border-radius: 5px;*/
 /*    transition: background-color 0.3s ease;*/
 /*    text-decoration: none;*/
+/*    width: 20%;*/
 /*}*/
 
 /*.back-button:hover {*/
-/*    background-color: #5a6268;*/
+/*    background-color: #0056b3;*/
+/*    text-decoration: none;*/
+/*    color: white;*/
 /*}*/
 
-/*h1 {*/
-/*    font-size: 2.5rem;*/
-/*    color: #ffffff;*/
-/*    text-align: center;*/
-/*    margin: 0;*/
-/*}*/
-
-/*.settings-section-wrapper {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: center;*/
-/*    align-items: flex-start;*/
-/*    width: 100%;*/
-/*    max-width: 1200px;*/
-/*    gap: 40px;*/
-/*}*/
-
+/*!* Form sections styling *!*/
 /*.settings-section {*/
-/*    flex: 0 1 40%;*/
-/*    width: 100%;*/
-/*    background: rgba(255, 255, 255, 0.8);*/
-/*    border-radius: 10px;*/
-/*    padding: 40px;*/
-/*    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);*/
-/*    max-width: 500px;*/
-/*}*/
-/*.settings-section2 {*/
-/*    flex: 0 1 40%;*/
-/*    width: 100%;*/
-/*    background: rgba(255, 255, 255, 0.8);*/
-/*    border-radius: 10px;*/
-/*    padding: 40px;*/
-/*    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);*/
-/*    max-width: 500px;*/
+/*    background: #fff;*/
+/*    border-radius: 8px;*/
+/*    padding: 20px;*/
+/*    margin-bottom: 40px;*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
 /*}*/
 
-/*h2 {*/
-/*    font-size: 1.8rem;*/
-/*    margin-bottom: 20px;*/
-/*    color: #333;*/
+/*!* Username section styling *!*/
+/*.username-section {*/
+/*    background-color: rgba(0, 123, 255, 0.1); !* Light blue background *!*/
+/*    border-left: 5px solid #007bff; !* Blue left border *!*/
 /*}*/
 
-/*.form-group {*/
-/*    margin-bottom: 20px;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: flex-start;*/
+/*!* Password section styling *!*/
+/*.password-section {*/
+/*    background-color: rgba(220, 53, 69, 0.1); !* Light red background *!*/
+/*    border-left: 5px solid #dc3545; !* Red left border *!*/
 /*}*/
 
-/*label {*/
-/*    font-size: 1rem;*/
-/*    color: #333;*/
-/*    margin-bottom: 5px;*/
+/*!* Specific input-wrapper customizations *!*/
+/*.input-wrapper {*/
+/*    display: block; !* Ensures that each input wrapper takes the full width and stacks *!*/
+/*    margin-bottom: 20px; !* Adds spacing between each input *!*/
 /*}*/
 
-/*input {*/
-/*    width: 100%;*/
-/*    padding: 10px;*/
-/*    border-radius: 5px;*/
+/*!* Specific customization for the 'New Username' input *!*/
+/*.input-wrapper label[for="newUsername"] {*/
+/*    font-weight: bold;*/
+/*    color: #007bff;*/
+/*}*/
+
+/*.input-wrapper input#newUsername {*/
+/*    background-color: #E5E4E2; !* Light grey background *!*/
 /*    border: 1px solid #ccc;*/
-/*    font-size: 1rem;*/
+/*    padding: 10px;*/
 /*}*/
 
-/*button {*/
+/*!* Specific customization for 'Current Password' input *!*/
+/*.input-wrapper label[for="usernameCurrentPassword"] {*/
+/*    font-weight: bold;*/
+/*    color: #007bff;*/
+/*}*/
+
+/*.input-wrapper input#usernameCurrentPassword {*/
+/*    background-color: #E5E4E2; !* Light grey background *!*/
+/*    border: 1px solid #ccc;*/
+/*    padding: 10px;*/
+/*}*/
+
+/*!* Specific customization for 'Current Password' for Password Change *!*/
+/*.input-wrapper label[for="passwordCurrentPassword"] {*/
+/*    font-weight: bold;*/
+/*    color: #dc3545;*/
+/*}*/
+
+/*.input-wrapper input#passwordCurrentPassword {*/
+/*    background-color: #E5E4E2; !* Light grey background *!*/
+/*    border: 1px solid #ccc;*/
+/*    padding: 10px;*/
+/*}*/
+
+/*!* Specific customization for 'New Password' input *!*/
+/*.input-wrapper label[for="newPassword"] {*/
+/*    font-weight: bold;*/
+/*    color: #dc3545;*/
+/*}*/
+
+/*.input-wrapper input#newPassword {*/
+/*    background-color: #E5E4E2; !* Light grey background *!*/
+/*    border: 1px solid #ccc;*/
+/*    padding: 10px;*/
+/*}*/
+
+/*!* Specific customization for 'Confirm Password' input *!*/
+/*.input-wrapper label[for="confirmPassword"] {*/
+/*    font-weight: bold;*/
+/*    color: #dc3545;*/
+/*}*/
+
+/*.input-wrapper input#confirmPassword {*/
+/*    background-color: #E5E4E2; !* Light grey background *!*/
+/*    border: 1px solid #ccc;*/
+/*    padding: 10px;*/
+/*}*/
+
+/*!* Button styling *!*/
+/*.btn {*/
+/*    padding: 10px 15px;*/
+/*    font-size: 16px;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*    border: none;*/
+/*}*/
+
+/*.btn-primary {*/
 /*    background-color: #007bff;*/
 /*    color: #fff;*/
-/*    font-weight: bold;*/
-/*    padding: 10px 20px;*/
-/*    border: none;*/
-/*    border-radius: 5px;*/
-/*    cursor: pointer;*/
-/*    transition: background-color 0.3s ease;*/
-/*    width: 100%;*/
 /*}*/
 
-/*button:hover {*/
+/*.btn-primary:hover {*/
 /*    background-color: #0056b3;*/
 /*}*/
 
-/*.error-message {*/
-/*    color: #ff4d4d;*/
+/*.btn-danger {*/
+/*    background-color: #dc3545;*/
+/*    color: #fff;*/
+/*}*/
+
+/*.btn-danger:hover {*/
+/*    background-color: #c82333;*/
+/*}*/
+
+/*!* Alerts (success & error) *!*/
+/*.error-message, .success-message {*/
 /*    margin-bottom: 20px;*/
+/*    font-size: 14px;*/
+/*    padding: 10px;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.error-message {*/
+/*    background-color: #f8d7da;*/
+/*    color: #721c24;*/
 /*}*/
 
 /*.success-message {*/
-/*    color: #28a745;*/
-/*    margin-bottom: 20px;*/
+/*    background-color: #d4edda;*/
+/*    color: #155724;*/
 /*}*/
+
+/*.username-form {*/
+/*    display: block;*/
+/*    padding: 15px;*/
+/*    background-color: transparent;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: none;*/
+/*}*/
+/*.password-section .password-form {*/
+/*    display: block;*/
+/*    padding: 15px;*/
+/*    background-color: transparent;*/
+/*    border-radius: 10px;*/
+/*    box-shadow:none;*/
+/*}*/
+
+/* General body and html styles */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow: auto; /* Allow scrolling */
+}
+
+/* Settings page gradient background */
+.settings-page {
+    min-height: 100vh; /* Ensure the page takes at least 100% height */
+    background: linear-gradient(-45deg, #2c2c2c, #4a4a4a, #6e6e6e, #8c8c8c);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-start; /* Align items to the top */
+    padding-bottom: 20px; /* Some space at the bottom */
+}
+
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Settings container styles */
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Light transparent background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Add margin to the bottom to space out sections */
+}
+
+/* Settings header styles */
+.settings-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    justify-content: space-between;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    width: 20%;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+    color: white;
+}
+
+/* Form sections styling */
+.settings-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Username section styling */
+.username-section {
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+    border-left: 5px solid #007bff; /* Blue left border */
+}
+
+/* Password section styling */
+.password-section {
+    background-color: rgba(220, 53, 69, 0.1); /* Light red background */
+    border-left: 5px solid #dc3545; /* Red left border */
+}
+
+/* Specific input-wrapper customizations */
+.input-wrapper {
+    display: flex; /* Ensures that each input wrapper takes the full width and stacks */
+    margin-bottom: 20px; /* Adds spacing between each input */
+}
+
+/* Specific customization for the 'New Username' input */
+.input-wrapper label[for="newUsername"] {
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+.input-wrapper input#newUsername {
+    background-color: #E5E4E2; /* Light grey background */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 38px;
+
+}
+
+/* Specific customization for 'Current Password' input */
+.input-wrapper label[for="usernameCurrentPassword"] {
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+.input-wrapper input#usernameCurrentPassword {
+    background-color: #E5E4E2; /* Light grey background */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 15px;
+}
+
+/* Specific customization for 'Current Password' for Password Change */
+.input-wrapper label[for="passwordCurrentPassword"] {
+    font-weight: bold;
+    color: #dc3545;
+    margin-top : 10px;
+}
+
+.input-wrapper input#passwordCurrentPassword {
+    background-color: #E5E4E2; /* Light grey background */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 51px;
+}
+
+/* Specific customization for 'New Password' input */
+.input-wrapper label[for="newPassword"] {
+    font-weight: bold;
+    color: #dc3545;
+    margin-top: 10px;
+}
+
+.input-wrapper input#newPassword {
+    background-color: #E5E4E2; /* Light grey background */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 75px;
+}
+
+/* Specific customization for 'Confirm Password' input */
+.input-wrapper label[for="confirmPassword"] {
+    font-weight: bold;
+    color: #dc3545;
+    margin-top: 10px;
+}
+
+.input-wrapper input#confirmPassword {
+    background-color: #E5E4E2; /* Light grey background */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+/* Button styling */
+.btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Alerts (success & error) */
+.error-message, .success-message {
+    margin-bottom: 20px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.username-form {
+    display: block;
+    padding: 15px;
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: none;
+}
+.password-section .password-form {
+    display: block;
+    padding: 15px;
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow:none;
+}
