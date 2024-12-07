@@ -42,9 +42,14 @@ app.use('/settings', isAuthenticated, profileRoutes);  // Protect the profile ro
 app.use('/register', checkAlreadyLoggedIn, profileRoutes);  // Protect the profile route
 app.use('/login', checkAlreadyLoggedIn, profileRoutes);  // Protect the profile route
 
+app.get('/status', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'shakespearegpt-frontend/dist', 'index.html'));
 });
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+export default app;
