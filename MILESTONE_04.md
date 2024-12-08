@@ -66,10 +66,18 @@
 1. [History Mapping](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/blob/9812b867d6b641ed78a6b970ef19f30296d04631/shakespearegpt-frontend/src/Chat.jsx#L205)
 
 ### Second Link to GitHub Line Numbers for Constructor, HOF, etc.
-2. [Messages Mapping](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/blob/9812b867d6b641ed78a6b970ef19f30296d04631/shakespearegpt-frontend/src/Chat.jsx#L256)
+2. [History Update](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/blob/9812b867d6b641ed78a6b970ef19f30296d04631/shakespearegpt-frontend/src/Chat.jsx#L304)
 
 ### Third Link to GitHub Line Numbers for Constructor, HOF, etc.
-3. [History Update](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/blob/9812b867d6b641ed78a6b970ef19f30296d04631/shakespearegpt-frontend/src/Chat.jsx#L304)
+3. [Messages Mapping](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail/blob/9812b867d6b641ed78a6b970ef19f30296d04631/shakespearegpt-frontend/src/Chat.jsx#L256)
+
+---
+
+## Short Description for Links Above
+
+1. **`history.map((conv) => ...)`** - Maps over the chat history to display each conversation in the sidebar, allowing users to select, edit, or delete conversations dynamically.
+2. **`setHistory((prevHistory) => prevHistory.map((conv) => ...))`** - Maps over the existing history to update the name of a specific conversation when it is edited by the user.
+3. **`messages.map((msg, index) => ...)`** - Maps over the messages of the active conversation to display each message in the chat window, formatting user and bot messages differently.
 
 ---
 
