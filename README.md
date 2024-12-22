@@ -1,119 +1,169 @@
-# PersonaGPT
+# CelebrAI
 
 ## Overview
 
-PersonaGPT is a web application that allows users to engage in conversations in the style of various famous personalities, not just William Shakespeare. Users can input text, and the application will generate responses mimicking the unique writing style of the chosen persona. This project aims to provide an entertaining and educational experience for literature enthusiasts, students, and anyone interested in exploring the language and styles of different historical and cultural figures.
+**CelebrAI** is a fun, interactive, and educational tool that brings the styles of famous historical figures, literary characters, and philosophers to life. Engage in conversations with AI personas inspired by iconic individuals, offering a unique way to explore language, history, and literature.
 
-The application uses Gemini API to generate responses.
+With **CelebrAI**, users can:
+- Register and log in securely.
+- Chat with personas such as William Shakespeare, Albert Einstein, or even Hamlet.
+- Customize their settings.
+- Review and edit their conversation history.
 
-## Data Model
+This application combines entertainment and learning, making it perfect for students, educators, and enthusiasts alike!
 
-The application will store Users, Conversations, and Messages:
+---
 
-- **Users** can have multiple conversations (via references).
-- Each **conversation** can have multiple messages (by embedding).
+## Features
 
-### Example User
-```javascript
-{
-  username: "bardlover123",
-  hash: // a password hash,
-  conversations: // an array of references to Conversation documents
-}
-```
+- **AI-Powered Conversations:** Chat with AI personas that mimic historical and literary figures.
+- **Secure User Authentication:** Protect user data with robust login and session management.
+- **Customizable User Settings:** Update usernames, passwords, and other preferences.
+- **Conversation History:** Review and rename chat sessions for a tailored experience.
+- **Dynamic Persona Selection:** Change the persona mid-conversation for more interactive chats.
 
-### Example Conversation with Embedded Messages
-```javascript
-{
-  user: // a reference to a User object,
-  character: "Hamlet",
-  messages: [
-    { 
-      content: "To be, or not to be, that is the question:",
-      isUser: false,
-      timestamp: // timestamp
-    },
-    {
-      content: "What's troubling you, good Hamlet?",
-      isUser: true,
-      timestamp: // timestamp
-    }
-  ],
-  createdAt: // timestamp
-}
-```
+---
 
-## [Link to Commented First Draft Schema](db.js)
+## Technology Stack
+
+- **Frontend:** React.js, Bootstrap
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Authentication:** Passport.js
+- **API Integration:** GPT-based AI response generation
+
+---
 
 ## Wireframes
 
-- **/login** - Page for logging in or registering  
-  ![Wireframe for Login Page](register.png)
+### Login Page
+![Wireframe for Login Page](./assets/login-wireframe.png)
 
-- **/chat** - Main page for chatting with Shakespeare  
-  ![Wireframe for Chat Page](chat.png)
+### Chat Interface
+![Wireframe for Chat Page](./assets/chat-wireframe.png)
 
-- **/user info editing** - Page for editing user info
-  ![Wireframe for Change Username](change.png)
+### Settings Page
+![Wireframe for Settings Page](./assets/settings-wireframe.png)
 
-## Site Map
-![Site Map](map.png)
-Site map
+## Website MAP
+![Wireframe for Linking pages together](./assets/map-wireframe.png)
 
-## User Stories or Use Cases
+---
 
-1. As a non-registered user, I can register a new account with the site.
-2. As a user, I can log in to the site.
-3. As a user, I can start a new conversation with a Shakespearean character.
-4. As a user, I can view my conversation history.
-5. As a user, I can continue a previous conversation.
-6. As a user, I can choose different Shakespearean characters to converse with.
+## Installation and Setup
 
-## Research Topics
+### Prerequisites
+- Node.js and npm installed.
+- MongoDB installed and running.
 
-### 1. User Authentication - 5 points
-- **What is it?** Authentication is the process of confirming the identity of a user who tries to access an application, typically by verifying credentials such as a username and password.
-- **Why use it?** Ensures that only authenticated users can access sensitive data, like conversation history, protecting user privacy and application security.
-- **Modules/Solutions:**
-  - Passport.js (offers modular, flexible authentication strategies for Node.js)
-  - JWT (stateless, token-based authentication)
-  - OAuth 2.0 (for integration with providers like Google)
-- **Points:** 5 points
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/CelebrAI.git
+   cd CelebrAI
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up the environment:
+  - Create a `.env` file in the root directory.
+  - Add the following:
+    ```
+    PORT=3000
+    SESSION_SECRET=your_secret
+    MONGO_URI=mongodb://localhost:27017/celebrai
+    ```
+4. Start the application:
+   ```bash
+   npm run dev
+   ```
+5. Access the application at `http://localhost:3000`.
 
-### 2. CSS Framework for Consistent Styling - 3 points
-- **What is it?** A CSS framework provides reusable, pre-defined styles and layout structures to create a visually cohesive, responsive UI.
-- **Why use it?** Streamlines the design process and enhances the user experience by creating a consistent, polished appearance across all pages.
-- **Modules/Solutions:**
-  - Tailwind CSS (utility-first, highly customizable)
-  - Bootstrap (widely used, feature-rich)
-  - Bulma (lightweight and flexible)
-- **Points:** 3 points
+---
 
-### 3. Client-Side Form Validation - 4 points
-- **What is it?** Form validation checks that input data conforms to expected formats before submission, such as required fields or valid email addresses.
-- **Why use it?** Improves user experience by providing immediate feedback, reducing server load by filtering invalid submissions at the client level.
-- **Modules/Solutions:**
-  - JavaScript (custom validation)
-  - Parsley.js (flexible form validation library)
-  - Validator.js (utility for common validation patterns)
-- **Points:** 4 points
+## Usage
 
-### 4. Machine Learning Integration for Shakespearean Text Generation - 5 points
-- **What is it?** Integrates a pre-trained language model to generate responses in the Shakespearean style, adding authenticity and engagement to user conversations.
-- **Why use it?** Enhances the experience by creating high-quality, thematic responses that mimic Shakespeare's language, making the application unique.
-- **Modules/Solutions:**
-  - Hugging Face Transformers (extensive support for pre-trained NLP models)
-  - OpenAI GPT-2 (popular language model for fine-tuning)
-  - spaCy (for various NLP tasks and model deployment)
-- **Points:** 5 points
+1. **Register or Log In:**
+  - Navigate to the `/register` or `/login` page.
+  - Securely register or log in to your account.
 
-**Total Points:** 17 out of 10 required points
+2. **Chat with Personas:**
+  - After logging in, start a chat with any persona of your choice.
+  - Use the conversation editor to rename or delete chats.
 
-## [Link to Initial Main Project File](app.mjs)
+3. **Update Settings:**
+  - Visit `/settings` to change your username or password.
 
-## Annotations / References Used
+---
 
-1. [Passport.js Authentication Docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [Tailwind CSS Documentation](https://tailwindcss.com/docs) - (add link to source code that was based on this)
-3. [HuggingFace Transformers Library](https://huggingface.co/transformers/) - (add link to source code that was based on this)
-4. [Express.js Documentation](https://expressjs.com/) - (add link to source code that was based on this)
+## Project Showcase
+
+### How it Works
+_Add GIFs or screenshots here showing the functionality of the application:_
+- Login and Register
+- Chatting with a Persona
+- Customizing Settings
+- Viewing and Editing History
+
+---
+
+## Database Schemas
+
+### User
+```javascript
+{
+  username: String,
+  password: String,
+  conversations: [ObjectId] // References to Conversation documents
+}
+```
+
+### Conversation
+```javascript
+{
+  user: ObjectId, // Reference to User
+  persona: String, // Selected persona for the conversation
+  messages: [
+    { content: String, isUser: Boolean, timestamp: Date }
+  ]
+}
+```
+
+---
+
+## Testing
+
+- Unit tests for backend routes and authentication logic are available in the `tests/` directory.
+- Run tests using:
+  ```bash
+  npm test
+  ```
+
+---
+
+## Contributing
+
+We welcome contributions! To contribute:
+1. Fork the repository.
+2. Create a feature branch:
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Commit and push your changes.
+4. Open a pull request.
+
+---
+
+## License
+
+This project is licensed under the MIT License. However, **permission is required** to edit or use this code.
+
+---
+
+## Authors
+
+**Mahmoud Kassem**
+- [GitHub Repository](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-Mahmoud-K-Ismail)
+- [Deployed Site](http://linserv1.cims.nyu.edu:31940/)
+
