@@ -32,7 +32,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'shakespearegpt-frontend/dist')));
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 app.use('/auth', authRoutes);
 app.use('/chat', isAuthenticated, chatRoutes);  // Protect the chat route
