@@ -59,8 +59,8 @@ This application combines entertainment and learning, making it perfect for stud
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/CelebrAI.git
-   cd CelebrAI
+   git clone https://github.com/Mahmoud-K-Ismail/CelebrAI---Chat-with-Historical-Icons.git
+   cd CelebrAI---Chat-with-Historical-Icons
    ```
 2. Install dependencies:
    ```bash
@@ -73,12 +73,18 @@ This application combines entertainment and learning, making it perfect for stud
     PORT=3000
     SESSION_SECRET=your_secret
     MONGO_URI=mongodb://localhost:27017/celebrai
+    GEMINI_API_KEY= your_GEMINI_API_key
     ```
 4. Start the application:
+   - go to frontend directory and run:
    ```bash
-   npm run dev
+   npm run build
    ```
-5. Access the application at `http://localhost:3000`.
+   - go back to the root directory and run backend with the static files:
+   ```bash
+   node app.mjs
+   ```
+6. Access the application at `http://localhost:3000`.
 
 ---
 
@@ -107,10 +113,10 @@ This application combines entertainment and learning, making it perfect for stud
   ![Register](assets/registration_gif.gif)
 
 - **Chatting with a Persona**  
-  ![Chatting](assets/changing_username_gif.gif)
+  ![Chatting](assets/chat_gif.gif)
 
 - **Changing Username**  
-  ![Customizing](assets/chat_gif.gif)
+  ![Customizing](assets/changing_username_gif.gif)
 
 ---
 
