@@ -100,11 +100,17 @@ This application combines entertainment and learning, making it perfect for stud
 ## Project Showcase
 
 ### How it Works
-_Add GIFs or screenshots here showing the functionality of the application:_
-- Login and Register
-- Chatting with a Persona
-- Customizing Settings
-- Viewing and Editing History
+- **Login**  
+  ![Login](assets/logging_in_gif.gif)
+
+- **Register**  
+  ![Register](assets/registration_gif.gif)
+
+- **Chatting with a Persona**  
+  ![Chatting](assets/changing_username_gif.gif)
+
+- **Changing Username**  
+  ![Customizing](assets/chat_gif.gif)
 
 ---
 
