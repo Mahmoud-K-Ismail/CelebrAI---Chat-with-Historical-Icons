@@ -59,8 +59,8 @@ This application combines entertainment and learning, making it perfect for stud
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/CelebrAI.git
-   cd CelebrAI
+   git clone https://github.com/Mahmoud-K-Ismail/CelebrAI---Chat-with-Historical-Icons.git
+   cd CelebrAI---Chat-with-Historical-Icons
    ```
 2. Install dependencies:
    ```bash
@@ -73,6 +73,7 @@ This application combines entertainment and learning, making it perfect for stud
     PORT=3000
     SESSION_SECRET=your_secret
     MONGO_URI=mongodb://localhost:27017/celebrai
+    GEMINI_API_KEY= your_GEMINI_API_key
     ```
 4. Start the application:
    ```bash
@@ -107,10 +108,10 @@ This application combines entertainment and learning, making it perfect for stud
   ![Register](assets/registration_gif.gif)
 
 - **Chatting with a Persona**  
-  ![Chatting](assets/changing_username_gif.gif)
+  ![Chatting](assets/chat_gif.gif)
 
 - **Changing Username**  
-  ![Customizing](assets/chat_gif.gif)
+  ![Customizing](assets/changing_username_gif.gif)
 
 ---
 
