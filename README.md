@@ -76,10 +76,15 @@ This application combines entertainment and learning, making it perfect for stud
     GEMINI_API_KEY= your_GEMINI_API_key
     ```
 4. Start the application:
+   - go to frontend directory and run:
    ```bash
-   npm run dev
+   npm run build
    ```
-5. Access the application at `http://localhost:3000`.
+   - go back to the root directory and run backend with the static files:
+   ```bash
+   node app.mjs
+   ```
+6. Access the application at `http://localhost:3000`.
 
 ---
 
